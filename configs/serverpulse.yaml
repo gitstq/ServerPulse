@@ -1,0 +1,102 @@
+# ServerPulse 配置文件 / ServerPulse Configuration
+# 服务器智能监控引擎 / Intelligent Server Monitoring Engine
+
+# 服务器标识 / Server identity
+server:
+  name: "localhost"          # 服务器名称 / Server name
+  id: ""                     # 服务器唯一ID，留空自动生成 / Unique ID, auto-generate if empty
+
+# 采集配置 / Collector settings
+collector:
+  interval: 10s              # 采集间隔 / Collection interval
+  cpu: true                  # 启用CPU采集 / Enable CPU collection
+  memory: true               # 启用内存采集 / Enable memory collection
+  disk: true                 # 启用磁盘采集 / Enable disk collection
+  network: true              # 启用网络采集 / Enable network collection
+  docker: false              # 启用Docker采集 / Enable Docker collection
+
+# 探测配置 / Probe settings
+probe:
+  interval: 30s              # 探测间隔 / Probe interval
+  targets:                   # 探测目标列表 / Probe target list
+    - name: "google-dns"
+      type: ping
+      host: "8.8.8.8"
+    - name: "local-ssh"
+      type: tcp
+      host: "127.0.0.1"
+      port: 22
+    - name: "local-http"
+      type: http
+      url: "http://localhost:8080/health"
+      timeout: 5s
+
+# 异常检测配置 / Anomaly detection settings
+anomaly:
+  enabled: true              # 启用异常检测 / Enable anomaly detection
+  window_size: 20           # 滑动窗口大小 / Sliding window size
+  zscore_threshold: 2.5     # Z-Score阈值 / Z-Score threshold
+  sensitivity: medium        # 灵敏度: low, medium, high / Sensitivity level
+
+# 告警配置 / Alert settings
+alert:
+  enabled: true              # 启用告警 / Enable alerts
+  aggregate_window: 60s     # 告警聚合窗口 / Alert aggregation window
+  cooldown: 300s            # 告警冷却时间 / Alert cooldown period
+  # 阈值规则 / Threshold rules
+  thresholds:
+    - metric: "cpu_usage"
+      warning: 80
+      critical: 95
+    - metric: "memory_usage"
+      warning: 85
+      critical: 95
+    - metric: "disk_usage"
+      warning: 85
+      critical: 95
+
+# 通知配置 / Notification settings
+notify:
+  # Webhook通知 / Webhook notification
+  webhook:
+    enabled: false
+    url: ""
+    secret: ""
+  # 邮件通知 / Email notification
+  email:
+    enabled: false
+    smtp_host: ""
+    smtp_port: 587
+    username: ""
+    password: ""
+    from: ""
+    to: []
+
+# 存储配置 / Storage settings
+storage:
+  path: "./data/serverpulse.db"  # SQLite数据库路径 / SQLite database path
+  retention_days: 30              # 数据保留天数 / Data retention days
+
+# Hub服务配置 / Hub server settings
+hub:
+  enabled: false             # 是否作为Hub运行 / Run as Hub
+  bind: ":9090"              # 监听地址 / Listen address
+  api_key: ""                # API密钥 / API key
+
+# Agent配置 / Agent settings
+agent:
+  enabled: false             # 是否作为Agent运行 / Run as Agent
+  hub_url: "http://localhost:9090"  # Hub地址 / Hub URL
+  api_key: ""                # Hub API密钥 / Hub API key
+  report_interval: 10s       # 上报间隔 / Report interval
+
+# TUI配置 / TUI settings
+tui:
+  refresh_rate: 1s           # 刷新频率 / Refresh rate
+  theme: default             # 主题: default, dark / Theme
+
+# 快照配置 / Snapshot settings
+snapshot:
+  auto: false                # 自动快照 / Auto snapshot
+  interval: 3600s            # 自动快照间隔 / Auto snapshot interval
+  max_count: 100             # 最大快照数量 / Max snapshot count

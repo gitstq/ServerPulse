@@ -1,0 +1,52 @@
+# Binaries / 二进制文件
+/bin/
+/serverpulse
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c` / 测试二进制
+*.test
+
+# Output of go coverage tool / 覆盖率输出
+*.out
+
+# Dependency directories / 依赖目录
+/vendor/
+
+# Go workspace file / Go 工作区文件
+go.work
+
+# IDE / 编辑器
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.iml
+
+# OS / 操作系统
+.DS_Store
+Thumbs.db
+
+# Config files (user-specific) / 用户配置文件
+configs/serverpulse.local.yaml
+
+# Data / 数据文件
+*.db
+*.sqlite
+*.sqlite3
+data/
+
+# Logs / 日志
+*.log
+logs/
+
+# Build output / 构建输出
+/dist/
+/build/
+
+# Temporary files / 临时文件
+/tmp/
